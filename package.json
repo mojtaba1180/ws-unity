@@ -1,0 +1,17 @@
+{
+  "name": "unity-socket",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./public/index.js",
+    "server": "node ./public/server-ws.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "http": "^0.0.1-security",
+    "socket.io": "^4.6.1",
+    "uuidv4": "^6.2.13",
+    "ws": "^8.13.0"
+  }
+}
