@@ -18,6 +18,7 @@ const log = (type, text) => {
 
 wss.on("connection", (ws) => {
   clients.add(ws);
+  // console.log(ws);
   log("info", "Client connected");
   ws.on("message", (data) => {
     const { x, y, z } = JSON.parse(data);
