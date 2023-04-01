@@ -17,8 +17,9 @@ const log = (type, text) => {
 };
 
 wss.on("connection", (ws) => {
-  clients.add({ ...ws, user_id: uuid() });
-  // console.log(ws);
+  ws.id = uuid();
+  clients.add(ws);
+  console.log(ws.id);
   log("info", "Client connected");
   ws.on("message", (data) => {
     const { rotation, position } = JSON.parse(data);
@@ -26,9 +27,7 @@ wss.on("connection", (ws) => {
 
     clients.forEach((client) => {
       if (client === ws) return;
-      client.send(
-        JSON.stringify({ position, rotation, user_id: client.user_id }),
-      );
+      client.send(JSON.stringify({ position, rotation, id: ws.id }));
     });
   });
 
