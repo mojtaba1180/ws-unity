@@ -28,16 +28,12 @@ wss.on("connection", (ws) => {
     console.log("position", { ...position }, "rotation", { ...rotation });
 
     clients.forEach((client) => {
+      let other_users = clients.filter((item) => item.id != ws.id);
       if (client === ws)
         return ws.send(
           JSON.stringify({
             current_user: ws.id,
-            clients: clients.map((item) => {
-              if (item.id != ws.id) {
-                return item.id;
-              }
-              return;
-            }),
+            clients: other_users.map((item) => item.id),
           }),
         );
       client.send(
