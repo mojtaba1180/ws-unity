@@ -1,7 +1,6 @@
-const port = 8080;
-const WebSocket = require("ws");
+const port = 8080;const WebSocket = require("ws");
 const wss = new WebSocket.Server({ port });
-const { uuidv4 } = require("uuidv4");
+const { uuid } = require("uuidv4");
 const clients = new Set();
 
 const log = (type, text) => {
@@ -18,7 +17,7 @@ const log = (type, text) => {
 };
 
 wss.on("connection", (ws) => {
-  clients.add({ ...ws, user_id: uuidv4() });
+  clients.add({ ...ws, user_id: uuid() });
   // console.log(ws);
   log("info", "Client connected");
   ws.on("message", (data) => {
