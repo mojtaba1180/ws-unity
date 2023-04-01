@@ -1,6 +1,7 @@
-const port = 8080;const WebSocket = require("ws");
+const port = 8080;
+const WebSocket = require("ws");
 const wss = new WebSocket.Server({ port });
-const { uuid } = require("uuidv4");
+const { uuidv4 } = require("uuidv4");
 const clients = new Set();
 
 const log = (type, text) => {
@@ -17,8 +18,7 @@ const log = (type, text) => {
 };
 
 wss.on("connection", (ws) => {
-  ws.id = uuid();
-  clients.add(ws);
+  clients.add({ ...ws, user_id: uuidv4() });
   // console.log(ws);
   log("info", "Client connected");
   ws.on("message", (data) => {
@@ -27,7 +27,9 @@ wss.on("connection", (ws) => {
 
     clients.forEach((client) => {
       if (client === ws) return;
-      client.send(JSON.stringify({ position, rotation }));
+      client.send(
+        JSON.stringify({ position, rotation, user_id: client.user_id }),
+      );
     });
   });
 
